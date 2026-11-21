@@ -1,0 +1,19 @@
+# Raw asset downloads: several packs forbid redistribution, and they're 330 MB.
+assets_candidates/
+
+# Packs whose licenses forbid redistributing the raw files (they ship inside builds only).
+game/assets/world/zombie/
+game/assets/world/lazystone/
+game/assets/characters/player/
+game/assets/ui/panels/
+
+# Godot
+game/.godot/
+game/export/
+*.translation
+
+# Cloudflare / Node
+node_modules/
+.wrangler/
+.dev.vars
+.env
