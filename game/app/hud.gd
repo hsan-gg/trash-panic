@@ -6,6 +6,7 @@ signal again_pressed
 signal menu_pressed
 
 const MATERIAL_COLORS := ItemArt.MATERIAL_COLORS
+const CHAOS_BANNER_S := 2.5
 const MISTAKES := {"wrong": "WRONG INPUT"}
 ## The Dropper (and the factory) explain each new trouble the first time it shows up.
 const FACTS := {
@@ -58,6 +59,9 @@ var _meter: Array[StyleBoxFlat] = []  ## POLLUTION gauge segments (rounded, glos
 var _booms: Label
 var _ping: Label
 var _chaos_label: Label
+var _meter_tag: Label  ## "POLLUTION", or the running chaos event and its countdown
+var _chaos_seen := ""  ## the chaos event the banner was last shown for
+var _chaos_banner_t := 0.0  ## seconds the big banner has left on screen
 var _menu: Control
 var _slams: Array = []  ## big announcements wait their turn so two never overlap
 var _slam_busy := 0.0
@@ -191,7 +195,7 @@ func refresh(shift: Shift) -> void:
 	for i in Rules.STARS.size():
 		if shift.coins >= Rules.STARS[i] and not _star_got[i]:
 			_light_star(i)
-	_rush_banner.visible = Rules.is_rush(shift.elapsed) and left > 0
+	_rush_banner.visible = Rules.is_rush(shift.elapsed) and shift.elapsed - Rules.RUSH_FROM_S < CHAOS_BANNER_S and left > 0  # brief: it sits over the rail
 	_rush_banner.modulate.a = 0.6 + 0.4 * absf(sin(Time.get_ticks_msec() / 200.0))
 	var hot := shift.mayhem.meter >= Rules.CHAOS_AT or shift.mayhem.chaos != ""
 	var blink := 0.5 + 0.5 * sin(Time.get_ticks_msec() / 120.0)
@@ -203,10 +207,23 @@ func refresh(shift: Shift) -> void:
 	_ping.get_parent().visible = Net.rtt_ms >= 0
 	_ping.text = "%s  %dms" % [Net.badge().text, Net.rtt_ms]  # the radio (5G SA, 4G, WI-FI...) and the round trip
 	_ping.add_theme_color_override("font_color", Color("4ADE3A") if Net.rtt_ms < 90 else (Color("FFD93D") if Net.rtt_ms < 180 else Color("FF3B2F")))
-	_chaos_label.visible = shift.mayhem.chaos != ""
-	_chaos_label.text = "CHAOS: %s  %ds" % [str(Rules.CHAOS_NAMES.get(shift.mayhem.chaos, shift.mayhem.chaos)), ceili(shift.mayhem.chaos_left)]
+	_show_chaos(shift.mayhem.chaos, shift.mayhem.chaos_left)
 	_sync_tickets(shift.orders, Rules.rush_mult(shift.elapsed))
 	_goals.refresh(shift)
+
+
+## A chaos event gets the big banner for CHAOS_BANNER_S only (it sits over the rail); after that its name and
+## countdown live in the pollution meter's title, which flashes while the chaos lasts.
+func _show_chaos(chaos: String, left: float) -> void:
+	if chaos != _chaos_seen:
+		_chaos_seen = chaos
+		_chaos_banner_t = CHAOS_BANNER_S if chaos != "" else 0.0
+	_chaos_banner_t = maxf(0.0, _chaos_banner_t - get_process_delta_time())
+	var title := str(Rules.CHAOS_NAMES.get(chaos, chaos))
+	_chaos_label.visible = _chaos_banner_t > 0.0
+	_chaos_label.text = "CHAOS: %s" % title
+	_meter_tag.text = "%s  %ds" % [title, ceili(left)] if chaos != "" else "POLLUTION"
+	_meter_tag.add_theme_color_override("font_color", Look.PINK if chaos != "" else Look.WHITE)
 
 
 func on_cue(e: Dictionary) -> void:
@@ -518,7 +535,9 @@ func _build_meter() -> void:
 	var tag := Look.label("POLLUTION", 16, Look.WHITE)
 	tag.position = Vector2(62, 4)
 	tag.size = Vector2(140, 24)
+	tag.clip_text = true
 	gauge.add_child(tag)
+	_meter_tag = tag
 	for i in 8:
 		var seg := Panel.new()
 		var style := StyleBoxFlat.new()
