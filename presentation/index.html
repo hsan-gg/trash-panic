@@ -131,11 +131,17 @@ p b { color: var(--paper); }
 #movie { position: fixed; inset: 0; background: rgba(5,8,18,.92); display: flex; align-items: center; justify-content: center; }
 #movie video { width: min(92vw, 160vh); border-radius: 18px; box-shadow: 0 30px 80px rgba(0,0,0,.6); }
 #movie .btn { position: absolute; top: calc(16px + env(safe-area-inset-top, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); }
+#demovids { position: fixed; z-index: 3; right: max(24px, env(safe-area-inset-right, 0px)); top: 50%; transform: translateY(-50%); width: min(42vw, 90vh); display: grid; gap: 14px; }
+#demovids figure { margin: 0; position: relative; }
+#demovids video { display: block; width: 100%; border-radius: 14px; border: 3px solid #23201A; box-shadow: 6px 6px 0 #23201A; background: #000; }
+#demovids figcaption { position: absolute; top: 10px; left: 10px; font-weight: 900; font-size: clamp(12px, 1.1vw, 18px); padding: .3em .8em; border-radius: 6px; background: var(--yellow); color: #23201A; border: 2px solid #23201A; }
+#demovids figure + figure figcaption { background: #9FE3C1; }
 .hint { position: fixed; top: calc(14px + env(safe-area-inset-top, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); font-size: 13px; color: rgba(35,32,26,.55); font-weight: 700; }
 @media (max-width: 760px) {
   .slide { width: 100%; justify-content: flex-end; padding-bottom: 80px; background: linear-gradient(transparent 30%, rgba(10,17,36,.85) 60%); }
   .slide.center { justify-content: flex-start; background: none; }
   .hint { display: none; }
+  #demovids { top: calc(12px + env(safe-area-inset-top, 0px)); left: 16px; right: 16px; width: auto; transform: none; gap: 8px; }
 }
 @media (prefers-reduced-motion: reduce) { .slide > * { transition: opacity .3s ease; transform: none !important; } }
 </style>
@@ -255,6 +261,10 @@ p b { color: var(--paper); }
 </div>
 <aside id="notes" hidden><div class="t" id="ntime"></div><div id="ntext"></div></aside>
 <div id="movie" hidden><video id="bigvideo" src="trailer.mp4" controls playsinline preload="metadata"></video><button class="btn" id="closeMovie" type="button">Close</button></div>
+<div id="demovids" hidden>
+  <figure><video src="player1_montage.mp4" muted loop playsinline preload="auto"></video><figcaption>Player 1 · phone A</figcaption></figure>
+  <figure><video src="player2_montage.mp4" muted loop playsinline preload="auto"></video><figcaption>Player 2 · phone B</figcaption></figure>
+</div>
 <video id="screenvideo" muted loop playsinline preload="none" hidden></video>
 <script>if (location.protocol !== "file:") { const v = document.getElementById("screenvideo"); v.crossOrigin = "anonymous"; v.src = "trailer.mp4"; v.preload = "auto"; }</script>
 
@@ -430,6 +440,9 @@ function go(i) {
   slides.forEach((s, j) => { s.classList.remove('on'); s.hidden = j !== cur; });
   requestAnimationFrame(() => requestAnimationFrame(() => slides[cur].classList.add('on')));  // un-hide first, then animate in
   pose(slides[cur].dataset.cam); setScreen(cur);
+  const demoOn = slides[cur].dataset.cam === 'demo';
+  $('demovids').hidden = !demoOn;
+  for (const v of $('demovids').querySelectorAll('video')) { if (!demoOn) { v.pause(); continue; } v.currentTime = 0; v.play().catch(() => {}); }  // restart together so both views stay in sync
   $('count').textContent = `${cur + 1} / ${slides.length}`;
   $('fill').style.width = `${(cur / (slides.length - 1)) * 100}%`;
   $('ntime').textContent = `Slide ${cur + 1} · ${NOTES[cur][0]}`; $('ntext').textContent = NOTES[cur][1];
