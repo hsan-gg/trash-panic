@@ -45,8 +45,6 @@ func _ready() -> void:
 		_plugin.start()
 		net_type = _plugin.getNetType()
 		_net_handle = _plugin.getNetworkHandle()
-		get_tree().on_request_permissions_result.connect(_on_permission_result)
-		OS.request_permission("android.permission.READ_PHONE_STATE")
 	if _link_ok():
 		_connect()
 
@@ -205,7 +203,3 @@ func _on_net_changed(type: String) -> void:
 		_drop_socket()
 	status_changed.emit()
 
-
-func _on_permission_result(permission: String, granted: bool) -> void:
-	if permission == "android.permission.READ_PHONE_STATE" and granted:
-		_plugin.refreshTelephony()

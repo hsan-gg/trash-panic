@@ -1,5 +1,7 @@
 # Build output and caches
-build/
+/build/
+game/android/build/libs/
+game/android/build/src/main/assets/
 game/.godot/
 game/android/build/build/
 game/android/build/.gradle/
