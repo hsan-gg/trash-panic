@@ -1,0 +1,42 @@
+; Engine configuration file.
+; Mobile-first: 1280x720 landscape 3D, GL Compatibility so the same build runs in the browser.
+
+config_version=5
+
+[application]
+
+config/name="TRASH PANIC!"
+run/main_scene="res://app/main.tscn"
+config/icon="res://icon.svg"
+config/features=PackedStringArray("4.7", "GL Compatibility")
+
+[autoload]
+
+Net="*res://net/net.gd"
+Gate="*res://net/connection_gate.tscn"
+Sfx="*res://core/sfx.gd"
+Juice="*res://core/juice.gd"
+Match="*res://net/match.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/handheld/orientation=4
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+buffering/agile_event_flushing=true
+
+[rendering]
+
+textures/vram_compression/import_etc2_astc=true
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/canvas_textures/default_texture_filter=1
+anti_aliasing/quality/msaa_3d=0
+lights_and_shadows/directional_shadow/size.mobile=2048

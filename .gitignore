@@ -1,0 +1,20 @@
+# Build output and caches
+build/
+game/.godot/
+game/android/build/build/
+game/android/build/.gradle/
+game/android/build/.kotlin/
+game/export/
+
+# Cloudflare / Node
+node_modules/
+.wrangler/
+.dev.vars
+.env
+
+# Keep any downloaded art out of git until licenses are checked (see ASSETS.md)
+assets_candidates/
+# reference screenshots (third-party, not ours to ship)
+design/refs/
+# packaged copies of files already in the repo
+TRASH_PANIC_presentation.zip

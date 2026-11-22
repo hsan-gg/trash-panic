@@ -1,0 +1,11 @@
+# Map 3: CIRCUIT BREAKERS, the e-waste plant at night. Short central belts, the shielded container in the middle of
+# the catch zone, crates (=) on both sides. Machine inputs trip: hold USE on them to reset the breaker.
+###############
+#K.....|#MMMMM#
+#..R...|......#
+#...>>>>>>>...#
+e..1...g...2..e
+#...<<<<<<<...#
+#..=...|...=..#
+#.B....|......#
+###############

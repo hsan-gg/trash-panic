@@ -1,0 +1,11 @@
+# Room 1: the Sorting Floor. Left = catch zone with the chute, container and battery bin; right = the Recycling Machine.
+# Legend in core/room_map.gd. Belt > carries waste to the machine side, belt < brings hazards back to the bins.
+###############
+#R.....|#MMMMM#
+#...>>>>>.....#
+#......|......#
+e..1...g...2..e
+#......|......#
+#...<<<<<.....#
+#K..B..|......#
+###############
