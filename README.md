@@ -12,7 +12,7 @@
 | Platform | How |
 |---|---|
 | **Android 7+** | Download `TrashPanic-v1.0-android.apk` from the **[latest release](../../releases/latest)**, open it on your phone, allow installs from your browser, tap Install. |
-| **Web (phones and computers)** | Open **https://trash-panic.hasanghorbel.workers.dev** in Chrome, Edge or Safari. On iPhone: Share → *Add to Home Screen* to play it full screen like an app. |
+| **Web (phones and computers)** | Host it yourself on Cloudflare’s free plan: see **[Deploy it on the web](#deploy-it-on-the-web)**. On iPhone, open it in Safari and use Share → *Add to Home Screen* to play full screen like an app. |
 | **iOS 14+ (native)** | Download `TrashPanic-v1.0-ios-xcode.zip` from the release and build it on a Mac with Xcode and your Apple ID (steps in `BUILD_ON_MAC.txt` inside the zip). |
 
 Android, iOS and web players can play together, as long as they run the same version.
@@ -64,6 +64,32 @@ cd server && npx wrangler@4 dev    # local server; deploy with npx wrangler@4 de
 ```
 
 Release signing reads `~/.config/the-last-drop/release-signing.env` (never committed).
+
+## Deploy it on the web
+
+The web version and the multiplayer server deploy together as one Cloudflare Worker (free plan is enough).
+
+1. **Accounts and tools:** a free [Cloudflare](https://dash.cloudflare.com/sign-up) account, Node 20+, Godot 4.7.2 with its export templates.
+2. **Pick your address.** In `server/wrangler.jsonc` set `"name"` to your worker name, e.g. `my-trash-panic`. Your game will live at `https://my-trash-panic.<your-subdomain>.workers.dev`.
+3. **Point the game at your server.** Replace the address in these two lines with your own (keep the paths):
+   - `game/net/match.gd`: `const URL := "wss://<your-worker>.<your-subdomain>.workers.dev/play"`
+   - `game/net/net.gd`: `const SERVER_URL := "wss://<your-worker>.<your-subdomain>.workers.dev/ws"`
+4. **Build the web version:**
+   ```sh
+   tools/build_web.sh release        # exports to build/web and gzips the .wasm
+   ```
+5. **Log in and deploy** (the Worker serves `build/web` and runs the matchmaking server):
+   ```sh
+   cd server
+   npx wrangler@4 login
+   npx wrangler@4 deploy
+   ```
+   Wrangler prints the URL. Open it on a phone or computer and press PLAY. Two people on the same URL (or a room code) are matched together.
+6. **Updates:** rebuild and run `npx wrangler@4 deploy` again. Players get the new version the next time they open the start menu. Bump `VERSION` in `game/net/match.gd` when the game changes, so old and new builds are never matched together.
+
+Android and iOS builds connect to whatever address is in step 3, so rebuild them after changing it if you want them to use your server.
+
+To test locally before deploying: `cd server && npx wrangler@4 dev`, then open `http://localhost:8787` (run the game with `-- --play-url=ws://127.0.0.1:8787/play` to point a desktop build at it).
 
 ## Credits
 
