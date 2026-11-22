@@ -12,5 +12,6 @@ Keys
 
 The pitch timer (in the notes, N) starts when you leave the first slide (target 5:00).
 
-Tip: press F11 for full screen. Keep trailer.mp4 and three.min.js next to index.html.
+Tip: press F11 for full screen. Keep trailer.mp4, player1_montage.mp4, player2_montage.mp4 and three.min.js next to index.html.
+The live demo slide plays both players' recordings, one above the other (muted, looping).
 Opened from a folder, the phone on slide 3 shows gameplay pictures; press T for the trailer itself.
