@@ -7,6 +7,11 @@ const OFFSETS := [0.0, 0.3, 0.55, 0.7, 0.9]
 
 func _initialize() -> void:
 	Controls.register_actions()
+	await process_frame
+	var gate := get_root().get_node_or_null("Gate")
+	if gate != null:  # offline tests: the connection gate would pause the game when the server is slow to answer
+		gate.set_process(false)
+	paused = false
 	var root := Node3D.new()
 	get_root().add_child(root)
 	var ground := StaticBody3D.new()
