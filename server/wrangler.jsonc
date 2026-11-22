@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "trash-panic",
+  "main": "src/index.js",
+  "compatibility_date": "2026-11-01",
+  // The Godot web export; /ws is not a file, so it falls through to the Worker.
+  "assets": { "directory": "../build/web", "binding": "ASSETS" },
+  "observability": { "enabled": true },
+  // Free Workers Rate Limiting: 60 socket connections per address per minute (/play and /ws).
+  "ratelimits": [{ "name": "CONNECT_LIMIT", "namespace_id": "1001", "simple": { "limit": 60, "period": 60 } }],
+  "durable_objects": { "bindings": [{ "name": "LOBBY", "class_name": "Lobby" }] },
+  // Free plan: Durable Objects must be SQLite-backed.
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Lobby"] }]
+}

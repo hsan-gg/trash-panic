@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="38%" r="70%">
+      <stop offset="0" stop-color="#FFD93D"/><stop offset="0.6" stop-color="#FF9F1A"/><stop offset="1" stop-color="#E2580B"/>
+    </radialGradient>
+    <linearGradient id="can" x1="0" x2="1"><stop offset="0" stop-color="#8E96A3"/><stop offset="0.45" stop-color="#D9DEE5"/><stop offset="1" stop-color="#6F7783"/></linearGradient>
+    <pattern id="hz" width="56" height="56" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="56" height="56" fill="#FFC21A"/><rect width="28" height="56" fill="#1E2026"/>
+    </pattern>
+    <clipPath id="sq"><rect width="512" height="512" rx="112"/></clipPath>
+  </defs>
+<g transform="translate(256 256) scale(0.66) translate(-256 -256)">  <!-- flying junk -->
+  <g stroke="#1E2026" stroke-width="9" stroke-linejoin="round">
+    <g transform="rotate(-28 92 128)"><rect x="66" y="88" width="52" height="82" rx="10" fill="#E8312F"/><rect x="66" y="112" width="52" height="22" fill="#F4F4F4"/></g>
+    <g transform="rotate(22 420 120)"><path d="M398 70h40v24l12 18v76h-64v-76l12-18z" fill="#5FD068"/></g>
+  </g>
+  <!-- can body -->
+  <g stroke="#1E2026" stroke-width="12" stroke-linejoin="round">
+    <path d="M150 200 L362 200 L338 420 Q336 436 320 436 L192 436 Q176 436 174 420 Z" fill="url(#can)"/>
+    <path d="M200 232 L212 404 M256 232 V404 M312 232 L300 404" stroke="#7A828E" stroke-width="10" fill="none" stroke-linecap="round"/>
+    <!-- lid popping off -->
+    <g transform="rotate(-14 256 170)">
+      <rect x="128" y="160" width="256" height="40" rx="14" fill="url(#can)"/>
+      <path d="M226 160 Q226 128 256 128 Q286 128 286 160" fill="none"/>
+    </g>
+    <!-- slime -->
+    <path d="M152 206 Q190 228 214 212 Q232 252 252 214 Q290 240 316 210 Q332 230 360 206 L362 200 L150 200 Z" fill="#7CE02C"/>
+    <path d="M214 212 Q218 262 230 262 Q242 262 238 226" fill="#7CE02C"/>
+    <path d="M316 210 Q318 246 328 246 Q338 246 334 214" fill="#7CE02C"/>
+  </g>
+  <!-- panicked face -->
+  <g stroke="#1E2026" stroke-width="10">
+    <circle cx="212" cy="300" r="34" fill="#fff"/><circle cx="300" cy="300" r="34" fill="#fff"/>
+    <circle cx="216" cy="304" r="12" fill="#1E2026"/><circle cx="296" cy="304" r="12" fill="#1E2026"/>
+    <path d="M226 352 Q256 336 286 352 Q296 396 256 400 Q216 396 226 352Z" fill="#6B1B1B" stroke-linejoin="round"/>
+    <path d="M178 262 L230 246 M334 262 L282 246" stroke-linecap="round" fill="none"/>
+  </g>
+  <path d="M384 238 q16 22 0 34 q-16 -12 0 -34z" fill="#4FC3F7" stroke="#1E2026" stroke-width="7"/>
+  <!-- recycle badge -->
+  <g transform="translate(392 380)">
+    <circle r="56" fill="#2FB344" stroke="#1E2026" stroke-width="10"/>
+    <g id="ar"><path d="M-26 -15 A30 30 0 0 1 17 -24.5" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round"/><path d="M30 -14 L27 -33 L11 -18 Z" fill="#fff" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></g><use href="#ar" transform="rotate(120)"/><use href="#ar" transform="rotate(240)"/>
+  </g>
+
+</g></svg>

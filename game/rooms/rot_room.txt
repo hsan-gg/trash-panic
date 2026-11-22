@@ -1,0 +1,11 @@
+# Map 2: ROT & ROLL, the compost yard. Long belts hug the gate, crates (=) get in the way, the bins sit in the corners.
+# Legend in core/room_map.gd. The floor tilts every few seconds: round waste rolls toward the edges (and the shark).
+###############
+#.....B|#MMMMM#
+#..=...|......#
+#.>>>>>>>>....#
+e..1...g...2..e
+#.<<<<<<<<....#
+#......|..=...#
+#R..K..|......#
+###############

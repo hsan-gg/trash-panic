@@ -1,19 +1,20 @@
-# Raw asset downloads: several packs forbid redistribution, and they're 330 MB.
-assets_candidates/
-
-# Packs whose licenses forbid redistributing the raw files (they ship inside builds only).
-game/assets/world/zombie/
-game/assets/world/lazystone/
-game/assets/characters/player/
-game/assets/ui/panels/
-
-# Godot
+# Build output and caches
+build/
 game/.godot/
+game/android/build/build/
+game/android/build/.gradle/
+game/android/build/.kotlin/
 game/export/
-*.translation
 
 # Cloudflare / Node
 node_modules/
 .wrangler/
 .dev.vars
 .env
+
+# Keep any downloaded art out of git until licenses are checked (see ASSETS.md)
+assets_candidates/
+# reference screenshots (third-party, not ours to ship)
+design/refs/
+# packaged copies of files already in the repo
+TRASH_PANIC_presentation.zip
