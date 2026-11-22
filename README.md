@@ -14,7 +14,6 @@
 | **Android 7+** | Download `TrashPanic-v1.0-android.apk` from the **[latest release](../../releases/latest)**, open it on your phone, allow installs from your browser, tap Install. |
 | **Web (phones and computers)** | Open **https://trash-panic.hasanghorbel.workers.dev** in Chrome, Edge or Safari. On iPhone: Share → *Add to Home Screen* to play it full screen like an app. |
 | **iOS 14+ (native)** | Download `TrashPanic-v1.0-ios-xcode.zip` from the release and build it on a Mac with Xcode and your Apple ID (steps in `BUILD_ON_MAC.txt` inside the zip). |
-| **Trailer** | `TrashPanic-trailer.mp4` in the release, 36 seconds. |
 
 Android, iOS and web players can play together, as long as they run the same version.
 
